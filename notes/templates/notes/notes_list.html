@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>notes</title>
+</head>
+<body>
+<a href="{% url 'note_create'  %}">Add note</a>
+{% if notes_list %}
+{% for object in notes_list %}
+<h1>{{ object.title }}</h1>
+<p>{{ object.body }}</p>
+<p>Published: {{ object.created_on|date }}</p>
+{% if object.updated_on %}
+<p>Modified: {{ object.updated_on|date }}</p>
+<a href="{% url 'note_detail' pk=object.id %}">View</a>
+{% endif %}
+{% endfor %}
+{% else %}
+<p>There is note yet</p>
+{% endif %}
+</body>
+</html>
