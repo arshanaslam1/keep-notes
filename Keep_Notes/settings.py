@@ -42,10 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'accounts.apps.AccountsConfig',
     'notes.apps.NotesConfig',
     'crispy_forms',
+
+    'allauth', # new
+    'allauth.account', # new
+    'allauth.socialaccount', # new
+    'allauth.socialaccount.providers.github', # new
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +84,13 @@ TEMPLATES = [
         },
     },
 ]
+
+# For Alloauth
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 
 WSGI_APPLICATION = 'Keep_Notes.wsgi.application'
 
@@ -126,11 +141,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+SITE_ID = 2
+#ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE' : [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS' : {
+            'access_type' : 'online',
+        }
+    }
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # url define
 LOGIN_REDIRECT_URL = 'author_notes_list'
