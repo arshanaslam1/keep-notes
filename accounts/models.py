@@ -23,6 +23,7 @@ class User(AbstractUser):
     last_name = models.CharField(_('last name'), max_length=150, blank=True, null=False)
     date_of_birth = models.DateField(_('date_of_birth'), max_length=150, blank=True, null=True)
     email = models.EmailField(unique=True)
+    avatar = models.ImageField(upload_to="profiles/avatars/", default='default.png', null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse_lazy("profile", kwargs={"pk": self.id})

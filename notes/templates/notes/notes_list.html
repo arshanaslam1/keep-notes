@@ -1,23 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>notes</title>
-</head>
-<body>
-<a href="{% url 'note_create'  %}">Add note</a>
-{% if notes_list %}
-{% for object in notes_list %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.body }}</p>
-<p>Published: {{ object.created_on|date }}</p>
-{% if object.updated_on %}
-<p>Modified: {{ object.updated_on|date }}</p>
-<a href="{% url 'note_detail' pk=object.id %}">View</a>
-{% endif %}
-{% endfor %}
-{% else %}
-<p>There is note yet</p>
-{% endif %}
-</body>
-</html>
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if notes_list %}
+        <div class="container-xl">
+            <!--Begin::Section-->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="m-portlet">
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                {% for object in notes_list %}
+                                    <div class="col-xl-3 col-lg-3 mb-3">
+                                        <div id="MainContent_gvNotes_divRecord_0" class="m-2 p-4 divNote"
+                                             style="background: #ffffff;">
+                                            <div id="MainContent_gvNotes_divdata_0">
+                                                <div
+                                                        class="m-scrollable--skin-dark mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar"
+                                                        data-scrollbar-shown="true"
+                                                        data-scrollable="true"
+                                                        data-max-height="60"
+                                                        style="max-height: 60px; height: 60px; position: relative; overflow: visible;"
+                                                >
+                                                    <div id="mCSB_1"
+                                                         class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside"
+                                                         style="max-height: none;" tabindex="0">
+                                                        <div id="mCSB_1_container"
+                                                             class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
+                                                             style="position: relative; top: 0; left: 0;" dir="ltr">
+                                                            <p class="text-justify pr-4">
+                                                                <span id="MainContent_gvNotes_lblTitle_0"
+                                                                      class="newstext m--font-bolder">{{ object.title }}</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div id="mCSB_1_scrollbar_vertical"
+                                                         class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical"
+                                                         style="display: none;">
+                                                        <div class="mCSB_draggerContainer">
+                                                            <div id="mCSB_1_dragger_vertical" class="mCSB_dragger"
+                                                                 style="position: absolute; min-height: 50px; height: 0px; top: 0px;">
+                                                                <div class="mCSB_dragger_bar"
+                                                                     style="line-height: 50px;"></div>
+                                                            </div>
+                                                            <div class="mCSB_draggerRail"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pl-1 pt-4">
+                                        <span id="MainContent_gvNotes_lblCreateDate_0"
+                                              class="m--icon-font-size-sm4 m_help">
+                                        {% if object.updated_on %}
+                                            {{ object.updated_on|date }}
+                                        {% else %}
+                                            {{ object.created_on|date }}
+                                        {% endif %}
+                                        </span>
+                                                </div>
+
+                                                <div class="m-separator m-separator--dashed Note-separator"></div>
+
+                                                <div
+                                                        class="m-scrollable--skin-dark mCustomScrollbar _mCS_2 mCS-autoHide mCS_no_scrollbar"
+                                                        data-scrollbar-shown="true"
+                                                        data-scrollable="true"
+                                                        data-max-height="150"
+                                                        style="max-height: 150px; height: 150px; position: relative; overflow: visible;"
+                                                >
+                                                    <div id="mCSB_2"
+                                                         class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside"
+                                                         style="max-height: none;" tabindex="0">
+                                                        <div id="mCSB_2_container"
+                                                             class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
+                                                             style="position: relative; top: 0; left: 0;" dir="ltr">
+                                                            <p class="text-justify pr-4">
+                                                                <span id="MainContent_gvNotes_lblDesc_0">{{ object.body }}</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div id="mCSB_2_scrollbar_vertical"
+                                                         class="mCSB_scrollTools mCSB_2_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical"
+                                                         style="display: none;">
+                                                        <div class="mCSB_draggerContainer">
+                                                            <div id="mCSB_2_dragger_vertical" class="mCSB_dragger"
+                                                                 style="position: absolute; min-height: 50px; height: 0px; top: 0px;">
+                                                                <div class="mCSB_dragger_bar"
+                                                                     style="line-height: 50px;"></div>
+                                                            </div>
+                                                            <div class="mCSB_draggerRail"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-4 text-center">
+                                                    <a
+                                                            id="MainContent_gvNotes_ibtnUpdate_0"
+                                                            title="Update Note"
+                                                            class="m-portlet__nav-link m-portlet__nav-link--icon m--icon-font-size-lg1 textdecoration"
+                                                            href="{% url 'note_update' pk=object.id %}"
+                                                    >
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+
+                                                    <a
+
+                                                            title="Delete"
+                                                            class="m-portlet__nav-link m-portlet__nav-link--icon m--icon-font-size-lg1 ml-1 textdecoration"
+                                                            href="{% url 'note_delete' pk=object.id %}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% else %}
+        <div class="signin-form text-center">
+            <form method="post">
+                <h5>There is note yet!</h5>
+
+            </form>
+        </div>
+    {% endif %}
+{% endblock content %}

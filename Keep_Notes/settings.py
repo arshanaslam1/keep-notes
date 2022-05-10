@@ -166,7 +166,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # url define
 LOGIN_REDIRECT_URL = 'author_notes_list'
-LOGIN_URL = 'login'
+LOGIN_URL = 'account_login'
 
 # Email server setup for gmail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -181,3 +181,4 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 
 #CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

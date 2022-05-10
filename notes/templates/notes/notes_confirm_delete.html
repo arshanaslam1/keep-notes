@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete Note</title>
-</head>
-<body>
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object.title }}"?</p>
-    {{ form }}
-    <input type="submit" value="Confirm">
-</form>
-
-</body>
-</html>
+{% extends 'main/base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "Login" %}{% endblock %}
+{% block content %}
+    <div class="signin-form text-center">
+        <form method="post">
+            <p>Are you sure you want to delete "{{ object.title }}"?</p>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">{% trans "Confirm" %}</button>
+        </form>
+    </div>
+{% endblock content %}

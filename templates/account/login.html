@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+    <div class="signin-form">
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+		<h2><b>Sign in</b></h2>
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+		<div class="social-btn text-center">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+		</div>
+		<div class="or-seperator"><b>or</b></div>
+        {% endif %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block signin-btn">Sign in</button>
+        </div>
+        <div class="text-center small"><a href="{% url 'account_reset_password' %}">Forgot Your password?</a></div>
+    </form>
+    <div class="text-center small">Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a></div>
+</div>
+
+{% endblock content %}
