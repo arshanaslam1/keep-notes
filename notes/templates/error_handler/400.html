@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% block head_title %}400 - Bad Request{% endblock %}
+{% block content %}
+    <div class="social-form text-center">
+    <h1><b>400</b></h1>
+
+<h3>Opps.... </h3>
+    <p>Bad Request, Please try again later or contact with admin</p>
+
+<div class="text-center small"><a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">back to home?</a></div>
+
+</div>
+{% endblock content %}

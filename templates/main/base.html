@@ -27,7 +27,7 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
 </head>
 <body>
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-    <a href="/" class="navbar-brand"><i class="fa fa-sticky-note-o"></i>Keep<b>Notes</b></a>
+    <a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}" class="navbar-brand"><i class="fa fa-sticky-note-o"></i>Keep<b>Notes</b></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>

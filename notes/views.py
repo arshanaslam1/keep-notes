@@ -59,24 +59,30 @@ class NoteCreateView(LoginRequiredMixin, JsonableResponseMixin, CreateView):
     success_message = 'You have add note successfully!'
 
 
-class NoteUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class NoteUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Notes
     form_class = NoteForm
     success_message = 'You have update note successfully!'
     template_name_suffix = '_update_form'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
     def test_func(self):
-        if self.request.user == self.object.user:
+        obj = self.get_object()
+        if self.request.user == obj.user:
             return True
         return False
 
 
-class NoteDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+class NoteDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Notes
     success_url = reverse_lazy('author_notes_list')
 
     def test_func(self):
-        if self.request.user == self.object.user:
+        obj = self.get_object()
+        if self.request.user == obj.user:
             return True
         return False
 
@@ -94,3 +100,18 @@ class SearchNoteView(ListView):
             ).order_by('-created_on')
         return search_posts
 
+
+def handler404(request, exception):
+    return render(request, 'error_handler/404.html', status=404)
+
+
+def handler500(request):
+    return render(request, 'error_handler/500.html', status=500)
+
+
+def handler403(request, exception):
+    return render(request, 'error_handler/403.html', status=403)
+
+
+def handler400(request, exception):
+    return render(request, 'error_handler/400.html', status=400)

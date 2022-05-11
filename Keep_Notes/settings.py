@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f9geg#k#u43g)gguln3boq5^_xi#5f*9h7_rop7mw@0bc039#u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG')) == '1'
 
 ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['127.0.0.1', 'codewithbyte.tech', 'www.codewithbyte.tech']
 CORS_ORIGIN_ALLOW_ALL = True
 #CORS_ALLOWED_ORIGINS = [
 #    '127.0.0.1',
@@ -105,29 +105,16 @@ WSGI_APPLICATION = 'Keep_Notes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 # at single time one is true and other all false or both are false.
-USE_AZURE_RDS = False
-USE_AWS_RDS = False
+USE_AZURE_RDS = str(os.environ.get('USE_AZURE_RDS')) == '1'  # when str(os.environ.get('USE_AZURE_RDS')) is 1 then value is True
 if USE_AZURE_RDS:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME':  os.environ.get('DATABASE_NAME'),
-            'USER': os.environ.get('DATABASE_USER'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-            'HOST': os.environ.get('DATABASE_HOST'),
-        }
-    }
-elif USE_AWS_RDS:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
             'NAME': os.environ.get('DATABASE_NAME'),
             'USER': os.environ.get('DATABASE_USER'),
             'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
             'HOST': os.environ.get('DATABASE_HOST'),
-            'PORT': os.environ.get('DATABASE_PORT'),
         }
     }
 else:
@@ -181,38 +168,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 # at single time one is true and other all false or both are false.
-AZURE_BLOB = False
-USE_S3 = False
+AZURE_BLOB = str(os.environ.get('AZURE_BLOB')) == '1'  # when str(os.environ.get('AZURE_BLOB')) is 1 then value is True
 if AZURE_BLOB:
-    # AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
-    # AZURE_CUSTOM_DOMAIN = '%s.blob.core.windows.net' % AZURE_ACCOUNT_NAME
-    AZURE_CUSTOM_DOMAIN = os.environ.get('AZURE_CUSTOM_DOMAIN')
+    AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
+    AZURE_CUSTOM_DOMAIN = '%s.blob.core.windows.net' % AZURE_ACCOUNT_NAME
+    #AZURE_CUSTOM_DOMAIN = os.environ.get('AZURE_CUSTOM_DOMAIN')
     AZURE_CONNECTION_STRING = os.environ.get('AZURE_CONNECTION_STRING')
     AZURE_SSL = True
 
     STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.azure.utils.AzureStaticStorage'
+    STATICFILES_STORAGE = 'Keep_Notes.azure.utils.AzureStaticStorage'
     STATIC_URL = 'https://{}/{}/'.format(AZURE_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
     MEDIAFILES_LOCATION = 'media'
-    DEFAULT_FILE_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.azure.utils.AzureMediaStorage'
+    DEFAULT_FILE_STORAGE = 'Keep_Notes.azure.utils.AzureMediaStorage'
     MEDIA_URL = 'htts://{}/{}/'.format(AZURE_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-elif USE_S3:
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-    AWS_QUERYSTRING_AUTH = False
-    AWS_S3_FILE_OVERWRITE = True
-    AWS_DEFAULT_ACL = None
-
-    STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.aws.utils.StaticStorage'
-    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-
-    MEDIAFILES_LOCATION = 'media'
-    DEFAULT_FILE_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.aws.utils.MediaStorage'
-    MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 else:
     STATIC_URL = 'static/'
     STATICFILES_DIRS = [
