@@ -1,13 +1,26 @@
-
 {% extends 'main/base.html' %}
-{% load i18n %}
-{% block head_title %}{% trans "Login" %}{% endblock %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <div class="social-form text-center">
-     <form method="post">
-      {% csrf_token %}
-        {{ form|crispy }}
-      <button type="submit" class="btn btn-primary">{% trans "Continue" %}</button>
-    </form>
-</div>
+    <div class="signin-form">
+        <form id="add_form" method="POST" action="">
+
+            <p id="add_form_message"></p>
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <div class="text-center">
+                <button title="Add Note" type="submit"
+                        class="m-portlet__nav-link btn btn-secondary m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                    <span class="fa fa-check"></span>
+                </button>
+                <button title="Cancel" type="reset"
+                        class="m-portlet__nav-link btn btn-secondary m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                    <span class="fa fa-close"></span>
+                </button>
+            </div>
+        </form>
+    </div>
 {% endblock content %}
+

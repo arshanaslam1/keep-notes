@@ -27,6 +27,13 @@ SECRET_KEY = 'django-insecure-f9geg#k#u43g)gguln3boq5^_xi#5f*9h7_rop7mw@0bc039#u
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'codewithbyte.tech', 'www.codewithbyte.tech']
+CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ALLOWED_ORIGINS = [
+#    '127.0.0.1',
+#    '',
+#]
+
 
 # user model
 
@@ -54,6 +61,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github', # new
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -98,12 +106,38 @@ WSGI_APPLICATION = 'Keep_Notes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# at single time one is true and other all false or both are false.
+USE_AZURE_RDS = False
+USE_AWS_RDS = False
+if USE_AZURE_RDS:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME':  os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST'),
+        }
     }
-}
+elif USE_AWS_RDS:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST'),
+            'PORT': os.environ.get('DATABASE_PORT'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 
 # Password validation
@@ -137,12 +171,78 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+# at single time one is true and other all false or both are false.
+AZURE_BLOB = False
+USE_S3 = False
+if AZURE_BLOB:
+    # AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
+    # AZURE_CUSTOM_DOMAIN = '%s.blob.core.windows.net' % AZURE_ACCOUNT_NAME
+    AZURE_CUSTOM_DOMAIN = os.environ.get('AZURE_CUSTOM_DOMAIN')
+    AZURE_CONNECTION_STRING = os.environ.get('AZURE_CONNECTION_STRING')
+    AZURE_SSL = True
 
-STATIC_URL = 'static/'
-SITE_ID = 2
-#ACCOUNT_EMAIL_VERIFICATION = 'none'
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.azure.utils.AzureStaticStorage'
+    STATIC_URL = 'https://{}/{}/'.format(AZURE_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_FILE_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.azure.utils.AzureMediaStorage'
+    MEDIA_URL = 'htts://{}/{}/'.format(AZURE_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+elif USE_S3:
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = True
+    AWS_DEFAULT_ACL = None
+
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.aws.utils.StaticStorage'
+    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_FILE_STORAGE = 'Online_Portfolio_and_Blog_With_CMS.aws.utils.MediaStorage'
+    MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+else:
+    STATIC_URL = 'static/'
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+
+    # Location of static files
+    #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    # Base url to serve media files
+    MEDIA_URL = '/media/'
+    # Path where media is stored
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# url define
+LOGIN_REDIRECT_URL = 'author_notes_list'
+LOGIN_URL = 'account_login'
+
+# Email server setup for gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+# BY USEING SET ENVIRMENT VARIBALE
+EMAIL_HOST_USER = os.environ.get('EMAIL')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+
+
+#CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -156,29 +256,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# url define
-LOGIN_REDIRECT_URL = 'author_notes_list'
-LOGIN_URL = 'account_login'
-
-# Email server setup for gmail
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
-# BY USEING SET ENVIRMENT VARIBALE
-# EMAIL_HOST_USER = 'xxxxxx@gmail.com'
-# EMAIL_HOST_PASSWORD = 'xxxxxx'
-EMAIL_HOST_USER = os.environ.get('EMAIL')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-
-
-#CRISPY_TEMPLATE_PACK = 'uni_form'
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+SITE_ID = 2
+#ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_FORMS = {'signup': 'accounts.forms.AccountRegisterForm'}

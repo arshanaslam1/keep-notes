@@ -21,4 +21,4 @@ class Notes(models.Model):
 
     def get_absolute_url(self):
         print(self.id)
-        return reverse('note_detail', kwargs={'pk': self.id})
+        return reverse('author_notes_list')

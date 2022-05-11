@@ -16,7 +16,7 @@ class NoteForm(forms.ModelForm):
                            widget=forms.Textarea(
                                attrs={
                                    "rows": "6",
-                                   "placeholder": "Write meta description here . . ."
+                                   "placeholder": "Write note here . . ."
                                }
                            )
                            )
