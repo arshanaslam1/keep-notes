@@ -70,7 +70,7 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
 
                 <div class="nav-item dropdown">
                     <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img
-                            src="{{ user.avatar.url }}" class="avatar"
+                            src="{% if user.avatar.url %}{{ user.avatar.url }}{% else %}{% static "assets/keep_note/img/avatar.png" %}{% endif %}" class="avatar"
                             alt="{% if user.first_name %}{{ user.first_name|title }}{% endif %}
                                 {% if user.last_name %}{{ user.last_name|title }}{% endif %}">
                         {% if user.first_name %}{{ user.first_name|title }}{% endif %}
