@@ -3,7 +3,6 @@
 {% block content %}
     <div class="signin-form">
         <form id="add_form" method="POST" action="">
-
             <p id="add_form_message"></p>
             {% csrf_token %}
             {{ form|crispy }}

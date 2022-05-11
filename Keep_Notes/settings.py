@@ -12,11 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -29,16 +27,15 @@ DEBUG = str(os.environ.get('DEBUG')) == '1'
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-#CORS_ALLOWED_ORIGINS = [
+# CORS_ALLOWED_ORIGINS = [
 #    '127.0.0.1',
 #    '',
-#]
+# ]
 
 
 # user model
 
 AUTH_USER_MODEL = 'accounts.User'
-
 
 # Application definition
 
@@ -55,10 +52,10 @@ INSTALLED_APPS = [
     'notes.apps.NotesConfig',
     'crispy_forms',
 
-    'allauth', # new
-    'allauth.account', # new
-    'allauth.socialaccount', # new
-    'allauth.socialaccount.providers.github', # new
+    'allauth',  # new
+    'allauth.account',  # new
+    'allauth.socialaccount',  # new
+    'allauth.socialaccount.providers.github',  # new
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'storages',
@@ -99,14 +96,13 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-
 WSGI_APPLICATION = 'Keep_Notes.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # at single time one is true and other all false or both are false.
-USE_AZURE_RDS = str(os.environ.get('USE_AZURE_RDS')) == '1'  # when str(os.environ.get('USE_AZURE_RDS')) is 1 then value is True
+USE_AZURE_RDS = str(
+    os.environ.get('USE_AZURE_RDS')) == '1'  # when str(os.environ.get('USE_AZURE_RDS')) is 1 then value is True
 if USE_AZURE_RDS:
     DATABASES = {
         'default': {
@@ -124,8 +120,6 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -145,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -156,9 +149,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -172,7 +162,7 @@ AZURE_BLOB = str(os.environ.get('AZURE_BLOB')) == '1'  # when str(os.environ.get
 if AZURE_BLOB:
     AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
     AZURE_CUSTOM_DOMAIN = '%s.blob.core.windows.net' % AZURE_ACCOUNT_NAME
-    #AZURE_CUSTOM_DOMAIN = os.environ.get('AZURE_CUSTOM_DOMAIN')
+    # AZURE_CUSTOM_DOMAIN = os.environ.get('AZURE_CUSTOM_DOMAIN')
     AZURE_CONNECTION_STRING = os.environ.get('AZURE_CONNECTION_STRING')
     AZURE_SSL = True
 
@@ -190,7 +180,7 @@ else:
     ]
 
     # Location of static files
-    #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     # Base url to serve media files
     MEDIA_URL = '/media/'
     # Path where media is stored
@@ -209,25 +199,23 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
-
-#CRISPY_TEMPLATE_PACK = 'uni_form'
+# CRISPY_TEMPLATE_PACK = 'uni_form'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE' : [
+        'SCOPE': [
             'profile',
             'email',
         ],
-        'AUTH_PARAMS' : {
-            'access_type' : 'online',
+        'AUTH_PARAMS': {
+            'access_type': 'online',
         }
     }
 }
 SITE_ID = 2
-#ACCOUNT_EMAIL_VERIFICATION = 'none'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True

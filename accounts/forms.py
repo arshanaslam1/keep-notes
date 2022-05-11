@@ -4,7 +4,7 @@ from django.forms.widgets import NumberInput
 from .models import User
 from .utils.validators import age_validator
 from django.contrib.auth.forms import PasswordResetForm
-from django.utils.translation import gettext_lazy as _
+
 
 class AccountUpdateForm(forms.ModelForm):
     date_of_birth = forms.DateField(validators=[age_validator],
@@ -38,12 +38,11 @@ class AccountRegisterForm(SignupForm):
     )
     date_of_birth = forms.DateField(
         validators=[age_validator],
-                                    widget=NumberInput(
-        attrs={'type': 'date',
-               }))
+        widget=NumberInput(
+            attrs={'type': 'date',
+                   }))
 
     field_order = ['first_name', 'last_name', 'username', 'email', 'date_of_birth', 'password1', 'password2']
-
 
     def save(self, request):
         # Ensure you call the parent class's save.
@@ -70,4 +69,3 @@ class AccountPasswordResetForm(PasswordResetForm):
             msg = "There is no user registered with the specified E-Mail address."
             self.add_error('email', msg)
         return email
-

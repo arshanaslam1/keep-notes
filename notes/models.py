@@ -1,6 +1,5 @@
 from django.db import models
-from django.urls import reverse, reverse_lazy
-
+from django.urls import reverse
 from accounts.models import User
 
 

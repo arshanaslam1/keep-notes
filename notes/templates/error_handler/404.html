@@ -3,12 +3,13 @@
 {% block head_title %}404 - Page not found{% endblock %}
 {% block content %}
     <div class="social-form text-center">
-    <h1><b>404</b></h1>
-
-<h3>Opps....</h3>
-    <p>Page not found</p>
-
-<div class="text-center small"><a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">back to home?</a></div>
-
-</div>
+        <h1><b>404</b></h1>
+        <h3>Opps....</h3>
+        <p>Page not found</p>
+        <div class="text-center small">
+            <a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">
+                back to home?
+            </a>
+        </div>
+    </div>
 {% endblock content %}

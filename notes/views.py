@@ -1,20 +1,24 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
-
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from accounts.models import User
 from notes.forms import NoteForm
 from notes.models import Notes
 
-class HomeView(TemplateView):
+
+class HomeView(View):
     template_name = "notes/home.html"
+
+    def get(self, request):
+        if self.request.user.is_authenticated:
+            return redirect(settings.LOGIN_REDIRECT_URL)
+        else:
+            return render(request, "notes/home.html")
 
 
 class NoteListView(LoginRequiredMixin, ListView):
@@ -23,6 +27,7 @@ class NoteListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user).order_by('-created_on')
+
 
 # AJAX response
 class JsonableResponseMixin:

@@ -5,13 +5,13 @@
     <title>{{ object.title }}</title>
 </head>
 <body>
-<a href="{% url 'note_delete' pk=object.id%}">Delete note</a>
-<a href="{% url 'note_update' pk=object.id%}">Update note</a>
+<a href="{% url 'note_delete' pk=object.id %}">Delete note</a>
+<a href="{% url 'note_update' pk=object.id %}">Update note</a>
 <h1>{{ object.title }}</h1>
 <p>{{ object.body }}</p>
 <p>Published: {{ object.created_on|date }}</p>
 {% if object.updated_on %}
-<p>Modified: {{ object.updated_on|date }}</p>
+    <p>Modified: {{ object.updated_on|date }}</p>
 {% endif %}
 </body>
 </html>

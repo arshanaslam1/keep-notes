@@ -1,8 +1,9 @@
 {% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block head_title %}{% if user.first_name %}{{ user.first_name|title }}{% endif %}
-    {% if user.last_name %}{{ user.last_name|title }}{% endif %} - Profile{% endblock %}
+    {% if user.last_name %}{{ user.last_name|title }}{% endif %} - Profile
+{% endblock %}
 {% block head %}
 {% endblock head %}
 
@@ -14,22 +15,21 @@
         </div>
         <div class="row">
             <div class="col-sm-3"><!--left col-->
-
-
                 <div class="text-center">
-                    <img src="{{ user.avatar.url }}" class="avatar img-circle img-thumbnail"
+                    <img src="
+                            {% if user.avatar %}{{ user.avatar.url }}{% else %}{% static "assets/keep_note/img/avatar.png" %}{% endif %}"
+                         class="avatar img-circle img-thumbnail"
                          alt="{% if user.first_name %}{{ user.first_name|title }}{% endif %}
-                                {% if user.last_name %}{{ user.last_name|title }}{% endif %}">
+                                {% if user.last_name %}{{ user.last_name|title }}{% endif %}"
+                    >
                 </div>
                 </hr><br>
-
-
                 <ul class="list-group">
                     <li class="list-group-item text-right"><span
-                            class="pull-left"><strong>Total Notes</strong></span> {{ object.notes.count }}</li>
+                            class="pull-left"><strong>Total Notes</strong></span> {{ object.notes.count }}
+                    </li>
                 </ul>
-
-            </div><!--/col-3-->
+            </div>
             <div class="col-sm-9">
                 <div class="tab-content">
                     <hr>
@@ -62,8 +62,7 @@
                     </div>
                 </div>
             </div>
-
-            </div><!--/col-9-->
-            </div><!--/row-->
+        </div><!--/col-9-->
+    </div><!--/row-->
     <hr>
 {% endblock content %}

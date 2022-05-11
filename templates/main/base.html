@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block head_title %}Keep Notes{% endblock %}</title>
-<link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
     <meta name="description" content="Always within reach
-
 Keep works on your phone, tablet and computer. Everything you add to Keep syncs across your devices so your important stuff is always with you. ">
     <link rel="icon" type="image/x-icon" href="{% static "assets/keep_note/img/favicon.ico" %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -18,16 +17,13 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static "assets/keep_note/css/main.css" %}">
-
-
-
-
     {% block head %}
     {% endblock head %}
 </head>
 <body>
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-    <a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}" class="navbar-brand"><i class="fa fa-sticky-note-o"></i>Keep<b>Notes</b></a>
+    <a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}"
+       class="navbar-brand"><i class="fa fa-sticky-note-o"></i>Keep<b>Notes</b></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -70,7 +66,9 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
 
                 <div class="nav-item dropdown">
                     <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img
-                            src="{% if user.avatar.url %}{{ user.avatar.url }}{% else %}{% static "assets/keep_note/img/avatar.png" %}{% endif %}" class="avatar"
+                            src="
+                                    {% if user.avatar %}{{ user.avatar.url }}{% else %}{% static "assets/keep_note/img/avatar.png" %}{% endif %}"
+                            class="avatar"
                             alt="{% if user.first_name %}{{ user.first_name|title }}{% endif %}
                                 {% if user.last_name %}{{ user.last_name|title }}{% endif %}">
                         {% if user.first_name %}{{ user.first_name|title }}{% endif %}
@@ -78,8 +76,10 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
                         <b class="caret"></b>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="{% url 'profile' pk=user.id %}" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
-                        <a href="{% url 'update_profile' pk=user.id %}" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a>
+                        <a href="{% url 'profile' pk=user.id %}" class="dropdown-item"><i class="fa fa-user-o"></i>
+                            Profile</a>
+                        <a href="{% url 'update_profile' pk=user.id %}" class="dropdown-item"><i
+                                class="fa fa-sliders"></i> Settings</a>
                         <div class="divider dropdown-divider"></div>
                         <a href="{% url 'account_logout' %}" class="dropdown-item"><i
                                 class="material-icons">&#xE8AC;</i> Logout</a>
@@ -106,14 +106,17 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
 <br>
 <br>
 <div class="footer-basic">
-        <footer>
-            <div class="social"><a href="https://www.facebook.com/arshanaslam1"><i class="fa fa-facebook"></i></a><a href="https://github.com/arshanaslam1"><i class="fa fa-github"></i></a><a href="https://www.linkedin.com/in/arshanaslam1/"><i class="fa fa-linkedin"></i></a><a href="https://twitter.com/arshanaslam1"><i class="fa fa-twitter"></i></a></div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://github.com/arshanaslam1/keep-notes">Source code</a></li>
-            </ul>
-            <p class="copyright">Copyright © 2022 Arshan Aslam. All Rights Reserved.</p>
-        </footer>
-    </div>
+    <footer>
+        <div class="social"><a href="https://www.facebook.com/arshanaslam1"><i class="fa fa-facebook"></i></a><a
+                href="https://github.com/arshanaslam1"><i class="fa fa-github"></i></a><a
+                href="https://www.linkedin.com/in/arshanaslam1/"><i class="fa fa-linkedin"></i></a><a
+                href="https://twitter.com/arshanaslam1"><i class="fa fa-twitter"></i></a></div>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://github.com/arshanaslam1/keep-notes">Source code</a></li>
+        </ul>
+        <p class="copyright">Copyright © 2022 Arshan Aslam. All Rights Reserved.</p>
+    </footer>
+</div>
 
 
 {% block javascript %}
