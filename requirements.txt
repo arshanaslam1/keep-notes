@@ -11,7 +11,9 @@ Django==4.0.4
 django-allauth==0.50.0
 django-crispy-forms==1.14.0
 django-dotenv==1.4.2
+django-environ==0.8.1
 django-storages==1.12.3
+gunicorn==20.1.0
 idna==3.3
 isodate==0.6.1
 msrest==0.6.21
