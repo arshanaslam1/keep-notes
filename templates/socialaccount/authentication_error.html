@@ -1,11 +1,16 @@
-{% extends "socialaccount/base.html" %}
-
+{% extends 'main/base.html' %}
 {% load i18n %}
-
 {% block head_title %}{% trans "Social Network Login Failure" %}{% endblock %}
-
 {% block content %}
-<h1>{% trans "Social Network Login Failure" %}</h1>
+    <div class="social-form text-center">
+        <h1><b>{% trans "Social Network Login Failure" %}</b></h1>
 
-<p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
-{% endblock %}
+        <p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
+
+        <div class="text-center small"><a
+                href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">back
+            to home?</a></div>
+    </div>
+{% endblock content %}
+
+
