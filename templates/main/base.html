@@ -87,9 +87,11 @@ Keep works on your phone, tablet and computer. Everything you add to Keep syncs 
                 </div>
             </div>
         {% else %}
-            <div class="navbar-nav ml-auto action-buttons">
-                <a href="{% url 'account_login' %}" class="btn nav-link  mr-4">Login</a>
-                <a href="{% url 'account_signup' %}" class="btn btn-primary sign-up-btn ">Sign up</a>
+            <div class="navbar-nav  ml-auto action-buttons">
+            <div class="btn-group">
+                <a href="{% url 'account_login' %}" class="btn btn-outline-light mr-2">Login</a>
+                <a href="{% url 'account_signup' %}" class="btn btn-primary mr-2">Sign up</a>
+            </div>
             </div>
         {% endif %}
     </div>
