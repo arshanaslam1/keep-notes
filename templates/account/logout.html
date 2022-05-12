@@ -2,18 +2,40 @@
 {% load i18n %}
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 {% block content %}
-    <div class="social-form text-center">
-    <h1><b>{% trans "Sign Out" %}</b></h1>
-
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
-
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <button type="submit" class="btn btn-primary">{% trans 'Sign Out' %}</button>
-</form>
-
-</div>
+    <section class="pt-5 pb-5 mt-0 d-flex"
+             style="min-height: 90vh;">
+        <div class="container-fluid">
+            <div class="row  justify-content-center d-flex-row h-100">
+                <div class="col-12 col-md-4 col-lg-3 h-50 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h4>{% trans "Sign Out" %}</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p>{% trans 'Are you sure you want to sign out?' %}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <form method="post" action="{% url 'account_logout' %}">
+                                        {% csrf_token %}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}"
+                                                   value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <button type="submit"
+                                                class="btn btn-primary btn-block">{% trans 'Sign Out' %}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
