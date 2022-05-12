@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
-{% block head_title %}{% trans "Login" %}{% endblock %}
+{% load i18n %}
+{% block head_title %}Are you sure you want to delete "{{ object.title }}"?{% endblock %}
 {% block content %}
         <section class="pt-5 pb-5 mt-0 d-flex"
              style="min-height: 90vh;">
