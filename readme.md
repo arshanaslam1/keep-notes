@@ -87,4 +87,5 @@ To run this app, you will need to follow these 3 steps:
 
     Pipenv
 
-3. Set Values in .env file If you want to host on Azure ohterwise only gmail and passowrd in this.      
+3. Rename "dot.env" file to ".env"      
+4. Set Values in .env file If you want to host on Azure ohterwise only gmail and passowrd in this.      
