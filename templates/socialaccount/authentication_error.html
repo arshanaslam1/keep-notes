@@ -1,16 +1,38 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% load i18n %}
 {% block head_title %}{% trans "Social Network Login Failure" %}{% endblock %}
 {% block content %}
-    <div class="social-form text-center">
-        <h1><b>{% trans "Social Network Login Failure" %}</b></h1>
-
-        <p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
-
-        <div class="text-center small"><a
-                href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">back
-            to home?</a></div>
-    </div>
+    <section class="pt-0 pb-5 mt-0 align-items-center d-flex bg-dark"
+             style="min-height: 90vh; background-size: cover; background-image: url({% static "assets/keep_note/img/draw2.webp" %});">
+        <div class="container-fluid">
+            <div class="row  justify-content-center align-items-center d-flex-row h-100">
+                <div class="col-12 col-md-4 col-lg-5 h-50 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h4>{% trans "Social Network Login Failure" %}</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center small">
+                                    <a href="
+                                            {% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">
+                                        back to home?
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
-
 

@@ -2,11 +2,30 @@
 {% load i18n %}
 {% block head_title %}{% trans "Login" %}{% endblock %}
 {% block content %}
-    <div class="signin-form text-center">
-        <form method="post">
-            <p>Are you sure you want to delete "{{ object.title }}"?</p>
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">{% trans "Confirm" %}</button>
-        </form>
-    </div>
+        <section class="pt-5 pb-5 mt-0 d-flex"
+             style="min-height: 90vh;">
+        <div class="container-fluid">
+            <div class="row  justify-content-center d-flex-row h-100">
+                <div class="col-12 col-md-4 col-lg-3 h-50 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p>Are you sure you want to delete "{{ object.title }}"?</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <form method="post">
+                                      {% csrf_token %}
+                                      <button type="submit" class="btn btn-primary btn-block">{% trans "Confirm" %}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}

@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include("notes.urls")),
     path('accounts/', include("allauth.urls")),
     path('admin/', admin.site.urls),
-    path('accoun/', include("accounts.urls")),
+    path('account/', include("accounts.urls")),
 ]
 
 handler404 = error_handler.handler404

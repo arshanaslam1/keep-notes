@@ -3,45 +3,51 @@
 {% load i18n %}
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 {% block content %}
-    <div class="signin-form">
-        <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
-            {% csrf_token %}
-            <h2><b>Sign Up</b></h2>
-            <div class="footer-basic text-center p-3">
-                <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use
-                    your
-                    {{ provider_name }} account to login to
-                    {{ site_name }}. As a final step, please complete the following form:{% endblocktrans %}</p>
+    <section class="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark"
+             style="min-height: 100vh; background-size: cover; background-image: url({% static "assets/keep_note/img/draw2.webp" %});">
+        <div class="container-fluid">
+            <div class="row  justify-content-center align-items-center d-flex-row h-100">
+                <div class="col-12 col-md-4 col-lg-3 h-50 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h4>Sign Up</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use
+                                        your
+                                        {{ provider_name }} account to login to
+                                        {{ site_name }}. As a final step, please complete the following form:{% endblocktrans %}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign Up
+                                            </button>
+                                        </div>
+                                        <p class="text-center small">Did have already an account?
+                                            <a href="{% url 'account_login' %}">Sign in</a>
+                                        </p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="or-seperator m-1"></div>
-            {{ form|crispy }}
-            {% if redirect_field_value %}
-                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-            {% endif %}
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg btn-block signin-btn">Sign Up</button>
-            </div>
-        </form>
-        <div class="text-center small">Did have already an account? <a href="{% url 'account_login' %}">Sign In</a>
         </div>
-    </div>
+    </section>
 {% endblock content %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

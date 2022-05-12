@@ -23,7 +23,7 @@ class HomeView(View):
 
 class NoteListView(LoginRequiredMixin, ListView):
     model = Notes
-    paginate_by = 8
+    paginate_by = 9
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user).order_by('-created_on')

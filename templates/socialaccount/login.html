@@ -1,23 +1,50 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% load i18n %}
 {% block head_title %}{% trans "Login" %}{% endblock %}
 {% block content %}
-    <div class="social-form text-center">
-    {% if process == "connect" %}
-    <h1>{% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}</h1>
-
-    <p>{% blocktrans with provider.name as provider %}You are about to connect a new third party account from {{ provider }}.{% endblocktrans %}</p>
-    {% else %}
-    <h1>{% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}</h1>
-
-    <p>{% blocktrans with provider.name as provider %}You are about to sign in using a third party account from {{ provider }}.{% endblocktrans %}</p>
-    {% endif %}
-
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary">{% trans "Continue" %}</button>
-    </form>
-</div>
+    <section class="pt-0 pb-5 mt-0 align-items-center d-flex bg-dark"
+             style="min-height: 90vh; background-size: cover; background-image: url({% static "assets/keep_note/img/draw2.webp" %});">
+        <div class="container-fluid">
+            <div class="row  justify-content-center align-items-center d-flex-row h-100">
+                <div class="col-12 col-md-4 col-lg-3 h-50 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            {% if process == "connect" %}
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h4>{% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <p>{% blocktrans with provider.name as provider %}You are about to connect a new third party account from {{ provider }}.{% endblocktrans %}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h4>{% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <p>{% blocktrans with provider.name as provider %}You are about to sign in using a third party account from {{ provider }}.{% endblocktrans %}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <form method="post">
+                                      {% csrf_token %}
+                                      <button type="submit" class="btn btn-primary btn-block">{% trans "Continue" %}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
-
-

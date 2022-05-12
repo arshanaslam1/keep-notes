@@ -1,36 +1,63 @@
 {% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% load i18n %}
 {% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-    <div class="signin-form">
-    <form class="login" method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}
-		<h2><b>Sign in</b></h2>
-        {% get_providers as socialaccount_providers %}
-        {% if socialaccount_providers %}
-		<div class="footer-basic text-center p-3">
-        <p>Login with social</p>
-            <div class="social">
-                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    <section class="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark"
+             style="min-height: 100vh; background-size: cover; background-image: url({% static "assets/keep_note/img/draw2.webp" %});">
+        <div class="container-fluid">
+            <div class="row  justify-content-center align-items-center d-flex-row h-100">
+                <div class="col-12 col-md-4 col-lg-3 h-50 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h4>Sign in</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    {% get_providers as socialaccount_providers %}
+                                    {% if socialaccount_providers %}
+                                        <div class="footer-basic text-center p-3">
+                                            <p>Login with social accounts</p>
+                                            <div class="social">
+                                                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                                            </div>
+                                        </div>
+                                        <div class="or-seperator m-0"><b>or</b></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="login" method="POST" action="{% url 'account_login' %}">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block"> Create Account
+                                            </button>
+                                        </div>
+                                        <p class="text-center small">
+                                            <a href="{% url 'account_reset_password' %}">Forgot Your password?</a>
+                                        </p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center small mt-3">
+                        Don't have an account?
+                        <a href="{% url 'account_signup' %}">
+                            Sign up
+                        </a>
+                    </div>
+                </div>
             </div>
-		</div>
-		<div class="or-seperator m-1"><b>or</b></div>
-        {% endif %}
-          {{ form|crispy }}
-          {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-          {% endif %}
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block signin-btn">Sign in</button>
         </div>
-        <div class="text-center small"><a href="{% url 'account_reset_password' %}">Forgot Your password?</a></div>
-    </form>
-    <div class="text-center small">Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a></div>
-</div>
-
+    </section>
 {% endblock content %}

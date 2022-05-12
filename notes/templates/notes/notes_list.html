@@ -1,8 +1,11 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
     {% if notes_list %}
-        <div class="container-xl mt-4">
+        <section class="pt-5 pb-5 mt-0 d-flex"
+             style="min-height: 80vh;">
+        <div class="container-xl">
             <div class="card-columns">
                 {% for object in notes_list %}
                     <div class="card text-center">
@@ -36,13 +39,26 @@
                 {% endfor %}
             </div>
         </div>
+        </section>
     {% else %}
-        <div class="signin-form text-center">
-            <form method="post">
-                <h5>There is note yet!</h5>
-
-            </form>
-        </div>
+        <section class="pt-5 pb-5 mt-0 d-flex"
+                 style="min-height: 80vh;">
+            <div class="container-fluid">
+                <div class="row  justify-content-center d-flex-row h-100">
+                    <div class="col-12 col-md-4 col-lg-3 h-50 ">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h5>There is note yet!</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     {% endif %}
     <nav>
         <ul class="pagination justify-content-center">

@@ -1,14 +1,19 @@
 {% extends 'main/base.html' %}
 {% block head_title %}500 - Internal server error{% endblock %}
 {% block content %}
-    <div class="social-form text-center">
-        <h1><b>500</b></h1>
-        <h3>Opps.... </h3>
-        <p>Internal server error, Please try again later or contact with admin</p>
-        <div class="text-center small">
-            <a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">
-                back to home?
-            </a>
+    <section class="pt-5 pb-5 mt-5 d-flex"
+             style="min-height: 80vh;">
+        <div class="container-fluid">
+            <div class="text-center">
+                <h1><b>500</b></h1>
+                <h3>Opps.... </h3>
+                <p>Internal server error, Please try again later or contact with admin</p>
+                <div class="text-center small">
+                    <a href="{% if user.is_authenticated %}{% url 'author_notes_list' %}{% else %}{% url 'home' %}{% endif %}">
+                        back to home?
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock content %}
